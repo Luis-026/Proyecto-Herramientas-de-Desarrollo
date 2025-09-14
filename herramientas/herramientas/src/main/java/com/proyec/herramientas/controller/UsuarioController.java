@@ -20,7 +20,7 @@ public class UsuarioController {
     public String listarUsuarios(Model model) {
         List<Usuario> lista = usuarioService.listarTodos();
         model.addAttribute("usuarios", lista);
-        return "usuarios"; // busca usuarios.html en templates
+        return "usuarios";
     }
     @PostMapping("/guardar")
     public String guardar(@RequestParam(value = "id", required = false) Long id,
