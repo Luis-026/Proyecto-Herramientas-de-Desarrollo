@@ -1,0 +1,1 @@
+<!-- Aquí se agregarán algunos mensajes de ciertos cambios que se realian en el sistema -->
