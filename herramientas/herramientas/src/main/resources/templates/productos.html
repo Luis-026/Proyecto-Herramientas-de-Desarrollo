@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <title>Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .producto-imagen {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .preview-imagen {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -16,6 +30,7 @@
         <thead class="table-dark">
         <tr>
             <th>ID</th>
+            <th>Imagen</th>
             <th>Nombre</th>
             <th>Descripción</th>
             <th>Precio</th>
@@ -28,14 +43,21 @@
         <tbody>
         <tr th:each="p : ${productos}">
             <td th:text="${p.id}"></td>
+            <td>
+                <img th:if="${p.imagen != null}"
+                     th:src="@{'/uploads/' + ${p.imagen}}"
+                     class="producto-imagen"
+                     alt="Imagen del producto">
+                <span th:if="${p.imagen == null}" class="text-muted">Sin imagen</span>
+            </td>
             <td th:text="${p.nombre}"></td>
             <td th:text="${p.descripcion}"></td>
             <td th:text="${p.precio}"></td>
             <td th:text="${p.stock}"></td>
             <td th:text="${p.categoria.nombre}"></td>
             <td>
-                <span th:text="${p.activo ? 'Activo' : 'Inactivo'}"
-                      th:classappend="${p.activo ? 'text-success' : 'text-danger'}"></span>
+                    <span th:text="${p.activo ? 'Activo' : 'Inactivo'}"
+                          th:classappend="${p.activo ? 'text-success' : 'text-danger'}"></span>
             </td>
             <td>
                 <a href="#" class="btn btn-sm btn-primary"
@@ -55,7 +77,7 @@
 <div class="modal fade" id="modalProducto" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="/productos/guardar">
+            <form method="post" action="/productos/guardar" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabel">Producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -93,6 +115,17 @@
                         </select>
                     </div>
 
+                    <div class="mb-3">
+                        <label>Imagen</label>
+                        <input type="file" name="imagenFile" id="imagenFile"
+                               class="form-control" accept="image/*" onchange="previewImagen(this)">
+                        <div id="preview-container"></div>
+                        <div id="imagen-actual" style="display: none;">
+                            <small class="text-muted">Imagen actual:</small>
+                            <img id="imagen-actual-preview" class="preview-imagen">
+                        </div>
+                    </div>
+
                     <div class="form-check">
                         <input type="checkbox" name="activo" id="activo" class="form-check-input" checked>
                         <label class="form-check-label">Activo</label>
@@ -124,9 +157,54 @@
                 document.getElementById('categoria').value = data.categoria.id;
                 document.getElementById('activo').checked = data.activo;
 
+                // Mostrar imagen actual si existe
+                const imagenActualDiv = document.getElementById('imagen-actual');
+                const imagenActualPreview = document.getElementById('imagen-actual-preview');
+                if (data.imagen) {
+                    imagenActualPreview.src = '/uploads/' + data.imagen;
+                    imagenActualDiv.style.display = 'block';
+                } else {
+                    imagenActualDiv.style.display = 'none';
+                }
+
+                // Limpiar preview de nueva imagen
+                document.getElementById('preview-container').innerHTML = '';
+                document.getElementById('imagenFile').value = '';
+
                 new bootstrap.Modal(document.getElementById('modalProducto')).show();
             });
     }
+
+    function previewImagen(input) {
+        const previewContainer = document.getElementById('preview-container');
+        previewContainer.innerHTML = '';
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'preview-imagen';
+                img.style.display = 'block';
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Limpiar el modal al cerrarlo
+    document.getElementById('modalProducto').addEventListener('hidden.bs.modal', function () {
+        document.getElementById('id').value = '';
+        document.getElementById('nombre').value = '';
+        document.getElementById('descripcion').value = '';
+        document.getElementById('precio').value = '';
+        document.getElementById('stock').value = '';
+        document.getElementById('categoria').value = '';
+        document.getElementById('activo').checked = true;
+        document.getElementById('imagenFile').value = '';
+        document.getElementById('preview-container').innerHTML = '';
+        document.getElementById('imagen-actual').style.display = 'none';
+    });
 </script>
 </body>
 </html>
