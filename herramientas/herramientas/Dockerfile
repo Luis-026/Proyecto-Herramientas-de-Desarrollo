@@ -1,0 +1,14 @@
+#IMAGEN BASE
+FROM eclipse-temurin:17-jdk
+
+#CARPETA DE TRABAJO DENTRO DEL CONTENEDOR
+WORKDIR /app
+
+#COPIAR ARCHIVOS NECESARIOS
+COPY target/herramientas-1.2-version.jar /app/herramientas.jar
+
+#PUERTO QUE EXPONE LA APLICACION
+EXPOSE 8080
+
+#COMANDO PARA EJECUTAR LA APLICACION
+CMD ["java", "-jar", "herramientas.jar"]
