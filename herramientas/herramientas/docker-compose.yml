@@ -26,3 +26,6 @@ services:
       SPRING_JPA_SHOW_SQL: "true"
 volumes:
   mysql_data:
+
+  # docker-compose.yml funcional para el proyecto de Herramientas de Desarrollo.
+  # Se puede visualizar desde Docker Desktop y permite levantar los contenedores.
