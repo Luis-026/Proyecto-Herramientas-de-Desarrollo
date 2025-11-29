@@ -53,11 +53,11 @@
 # Versión anterior del proyecto (1.1)
 ![Versión actual del proyecto (1.1)](docs/img/ver1.1.png)
 
-# Las proximas actualizaciones del proyecto serán mencionadas en este archivo.
-
-# ===================================================================================
+# =====================================
 # Entrega Final del Proyecto
-# ===================================================================================
+# =====================================
+
+# Nueva versión
 
 # Superlinter implementado para la verificación de codigo del sistema
 ![Superlinter funcionando en la revisión del codigo:](docs/img/superlinter.png)
