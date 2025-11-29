@@ -67,4 +67,4 @@
 ![docker-compose.yml](docs/img/dockercompose.png)
 ![Docker Desktop](docs/img/Docker%20Desktop.png)
 
-# Se implementaran mas cambios más adelante...
+# Se implementaran mas cambios más adelante
