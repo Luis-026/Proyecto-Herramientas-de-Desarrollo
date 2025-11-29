@@ -1,5 +1,5 @@
 #IMAGEN BASE
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:21-jdk
 
 #CARPETA DE TRABAJO DENTRO DEL CONTENEDOR
 WORKDIR /app
