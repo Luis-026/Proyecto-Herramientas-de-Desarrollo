@@ -1,8 +1,8 @@
 <!-- Aquí se agregarán algunos mensajes de ciertos cambios que se realian en el sistema -->
 
-# Los cambios realizados esta versión 1.1 del sistema son los siguientes:
+# Los cambios realizados esta versión 1.1 del sistema son los siguientes
 
-# Implementación de imagenes en el CRUD de productos        
+# Implementación de imagenes en el CRUD de productos
 ![Implementación de imagenes en el CRUD de productos](docs/img/productos.png)
 
 # Implementación de nuevas vistas
@@ -53,9 +53,9 @@
 # Versión anterior del proyecto (1.1)
 ![Versión actual del proyecto (1.1)](docs/img/ver1.1.png)
 
-# =====================================
+
 # Entrega Final del Proyecto
-# =====================================
+
 
 # Nueva versión
 
