@@ -1,17 +1,23 @@
-#IMAGEN BASE
-FROM eclipse-temurin:21-jdk
-
-#CARPETA DE TRABAJO DENTRO DEL CONTENEDOR
+# Etapa 1: compilar el proyecto con Maven (mvnw)
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 
-#COPIAR ARCHIVOS NECESARIOS
-COPY target/herramientas-1.2-version.jar /app/herramientas.jar
+# Copiar archivos necesarios para resolver dependencias y compilar
+COPY pom.xml .
+COPY mvnw .
+COPY .mvn .mvn
+COPY src ./src
 
-#PUERTO QUE EXPONE LA APLICACION
+# Dar permisos de ejecución al wrapper y compilar
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
+
+# Etapa 2: imagen final para ejecutar la app
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+
+# Copiar el JAR generado desde la etapa de build
+COPY --from=build /app/target/herramientas-1.2-version.jar app.jar
+
 EXPOSE 8080
 
-#COMANDO PARA EJECUTAR LA APLICACION
-ENTRYPOINT ["java", "-jar", "herramientas.jar"]
-
-
-# PARA LA PRESENTACIÓN EJECUTAR DESDE DOCKER DESKTOP
+ENTRYPOINT ["java", "-jar", "app.jar"]
