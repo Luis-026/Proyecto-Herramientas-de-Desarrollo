@@ -11,7 +11,7 @@ COPY target/herramientas-1.2-version.jar /app/herramientas.jar
 EXPOSE 8080
 
 #COMANDO PARA EJECUTAR LA APLICACION
-CMD ["java", "-jar", "herramientas.jar"]
+ENTRYPOINT ["java", "-jar", "herramientas.jar"]
 
 
 # PARA LA PRESENTACIÓN EJECUTAR DESDE DOCKER DESKTOP
